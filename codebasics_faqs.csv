@@ -1,0 +1,12 @@
+def create_vector_db():
+    # Absolute path ya correct relative path ensure karne ke liye
+    file_path = os.path.join(os.path.dirname(__file__), 'codebasics_faqs.csv')
+    
+    loader = CSVLoader(file_path=file_path, encoding="utf-8")
+    docs = loader.load()
+    
+    if not docs:
+        raise ValueError("CSV file khali hai!")
+        
+    vectordb = FAISS.from_documents(documents=docs, embedding=embeddings)
+    vectordb.save_local(vector_db_file_path)
